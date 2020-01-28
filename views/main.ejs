@@ -1,6 +1,36 @@
 <%- contentFor('body') %>
 <script>
-    axios.get();
+    document.addEventListener('DOMContentLoaded', () => {
+        // loaded function
+        axios.get('/content/printList').then(res => {
+            console.log(res);
+            let dataLength = res.data.length;
+            for (let a = 0; a < dataLength; a++) {
+                let seq = res.data[a].seq;
+                let title = res.data[a].title;
+                let regdate = res.data[a].regdate;
+                let name = res.data[a].name;
+                let hit = res.data[a].hit;
+
+                // array initialize
+                let dataArray = new Array(seq, title, regdate, name, hit);
+                let arrLength = dataArray.length;
+                console.log(dataArray);
+            }
+        });
+    });
 </script>
-<h1>main</h1>
-<div id="select"></div>
+<h1>board list</h1>
+<div style="width: 1200px; margin: 0 auto;">
+    <table>
+        <thead>
+            <th>No.</th>
+            <th>Title</th>
+            <th>RegiDate</th>
+            <th>name</th>
+            <th>Hit</th>
+        </thead>
+        <tbody id="boardList"></tbody>
+    </table>
+    <div id="inputArea"></div>
+</div>

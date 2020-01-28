@@ -15,8 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/static', express.static(__dirname + '/public'));
 app.use('/js', express.static(__dirname + '/node_modules/axios/dist'));
 
-const router = require('./routes/router');
-app.use('/', router);
+const route = require('./routes/route');
+const contentRoute = require('./routes/contentRoute');
+
+app.use('/', route);
+app.use('/content', contentRoute);
 
 http.listen(5545, () => {
     console.log(`http server start`);
