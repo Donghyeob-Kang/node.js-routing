@@ -1,0 +1,34 @@
+<%- contentFor('body') %>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // loaded data
+        axios
+            .get('/printBoard')
+            .then(res => {
+                console.log(res);
+                let title = res.data[0].title;
+
+                // print board
+                const tbody = document.getElementById('boardList');
+                let row = document.createElement('tr');
+                tbody.appendChild(row);
+                const cell = document.createElement('td');
+                let cellItem = document.createTextNode(`${title}`);
+                row.appendChild(cell);
+                cell.appendChild(cellItem);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    });
+</script>
+<h1>board list</h1>
+<div style="width: 1200px; margin: 0 auto;">
+    <table>
+        <thead>
+            <th>name</th>
+        </thead>
+        <tbody id="boardList"></tbody>
+    </table>
+    <div id="inputArea"></div>
+</div>

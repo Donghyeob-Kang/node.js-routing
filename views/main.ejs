@@ -1,23 +1,49 @@
 <%- contentFor('body') %>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // loaded function
-        axios.get('/content/printList').then(res => {
-            console.log(res);
-            let dataLength = res.data.length;
-            for (let a = 0; a < dataLength; a++) {
-                let seq = res.data[a].seq;
-                let title = res.data[a].title;
-                let regdate = res.data[a].regdate;
-                let name = res.data[a].name;
-                let hit = res.data[a].hit;
+        // loaded data
+        axios
+            .get('/printList')
+            .then(res => {
+                console.log(res);
+                let dataLength = res.data.length;
+                for (let a = 0; a < dataLength; a++) {
+                    let seq = res.data[a].seq;
+                    let title = res.data[a].title;
+                    let regdate = res.data[a].regdate;
+                    let name = res.data[a].name;
+                    let hit = res.data[a].hit;
 
-                // array initialize
-                let dataArray = new Array(seq, title, regdate, name, hit);
-                let arrLength = dataArray.length;
-                console.log(dataArray);
-            }
-        });
+                    // array initialize
+                    let dataArray = new Array(seq, title, regdate, name, hit);
+                    let arrLength = dataArray.length;
+                    console.log(dataArray);
+
+                    // print lists
+                    const tbody = document.getElementById('boardList');
+                    for (let b = 0; b < 1; b++) {
+                        let row = document.createElement('tr');
+                        tbody.appendChild(row);
+                        for (let c = 0; c < 5; c++) {
+                            if (c != 1) {
+                                const cell = document.createElement('td');
+                                let cellItem = document.createTextNode(
+                                    `${dataArray[c]}`
+                                );
+                                row.appendChild(cell);
+                                cell.appendChild(cellItem);
+                            } else {
+                                const cell = document.createElement('td');
+                                cell.innerHTML = `<a href='/board?list=${dataArray[0]}'>${dataArray[1]}</a>`;
+                                row.appendChild(cell);
+                            }
+                        }
+                    }
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
     });
 </script>
 <h1>board list</h1>

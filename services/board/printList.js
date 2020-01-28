@@ -5,3 +5,9 @@ module.exports.printBoard = callback => {
         callback(result);
     });
 };
+
+module.exports.board = (list, callback) => {
+    db.board(list, result => {
+        callback(result);
+    });
+};
